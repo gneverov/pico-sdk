@@ -6,9 +6,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <sys/time.h>
 #include <sys/times.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "pico.h"
 #if LIB_PICO_STDIO
@@ -29,6 +30,7 @@
 #define weak_raw_vprintf vprintf
 #endif
 
+#if 0
 static int picolibc_putc(char c, __unused FILE *file) {
 #if LIB_PICO_STDIO
     stdio_putchar(c);
@@ -56,6 +58,7 @@ static FILE __stdio = FDEV_SETUP_STREAM(picolibc_putc,
                                         _FDEV_SETUP_RW);
 
 FILE *const stdin = &__stdio; __strong_reference(stdin, stdout); __strong_reference(stdin, stderr);
+#endif
 
 void __weak __assert_func(const char *file, int line, const char *func, const char *failedexpr) {
     weak_raw_printf("assertion \"%s\" failed: file \"%s\", line %d%s%s\n",
